@@ -197,17 +197,7 @@
         transition:all 0.25s; white-space:nowrap; box-shadow:var(--sh-xs);
       }
       .btn-ghost:hover { border-color:var(--ink); background:var(--ink); color:var(--white); }
-      .hero-stats { display:flex; gap:24px; flex-wrap:wrap; animation:fadeUp 0.6s 0.32s ease both; }
-      .hero-stat { display:flex; align-items:center; gap:8px; }
-      .stat-icon { width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:0.72rem; flex-shrink:0; }
-      .stat-icon.g { background:var(--gold-lt); color:var(--gold-dk); border:1.5px solid rgba(24,87,247,0.25); }
-      .stat-icon.gr { background:var(--green-lt); color:var(--green-dk); border:1.5px solid rgba(16,185,129,0.25); }
-      .stat-icon.b { background:var(--sky-lt); color:var(--sky-dk); border:1.5px solid rgba(24,87,247,0.25); }
-      .hero-stat-text { font-size:0.78rem; font-weight:700; color:var(--ink-80); line-height:1.3; }
-      .hero-stat-text span { display:block; font-size:0.7rem; font-weight:500; color:var(--ink-55); }
-      @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
-      @keyframes fadeRight { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:none} }
-
+      
       /* ══ HERO VISUAL AREA ══ */
       .hero-card-wrap { animation:fadeRight 0.7s 0.22s ease both; position:relative; }
       .phone-wrap { position:relative; display:flex; flex-direction:column; align-items:center; }
@@ -627,8 +617,7 @@
         /* Dashboard comes AFTER text on mobile */
         .hero-card-wrap { order:2; }
         .hero-eyebrow, .hero-p { margin-left:auto; margin-right:auto; }
-        .hero-actions, .hero-stats { justify-content:center; }
-        .hero-stats { gap:16px; }
+        
 
         /* Dashboard card more compact on mobile */
         .dashboard { max-width:100%; padding:20px; }
@@ -655,9 +644,6 @@
         footer { flex-direction:column; text-align:center; }
         .f-links { justify-content:center; }
         .topbar { display:none; }
-        .hero-stats { flex-direction:column; align-items:center; gap:10px; }
-        .hero-stat { width:100%; justify-content:center; }
-        .dashboard { padding:18px; }
         .dash-streams { grid-template-columns:1fr 1fr; gap:7px; }
         .stream-val { font-size:0.82rem; }
         .ref-visual { overflow-x:auto; }
@@ -678,7 +664,7 @@
 
     <!-- ══ WA FLOAT ══ -->
     <div class="wa">
-      <span class="wa-label">Chat with Mentor Sydney</span>
+      <span class="wa-label">Chat with Mentor</span>
       <a href="https://wa.me/254745656143?text=Hello%20Mentor%20Sydney,%20guide%20me%20through." class="wa-btn" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
 
@@ -711,7 +697,6 @@
         <a href="#opps" class="nav-link">Loans &amp; Scholarships</a>
         <a href="#referral" class="nav-link">Refer &amp; Earn</a>
         <a href="#reviews" class="nav-link">Reviews</a>
-        <a href="https://wa.me/254745656143" target="_blank" class="nav-link"><i class="fab fa-whatsapp"></i> Mentor</a>
         <a href="https://mulastar.com/register.php?ref=Sydney" target="_blank" class="nav-cta"><i class="fas fa-gift"></i> Join — Get KSH 300 Free</a>
       </div>
     </nav>
@@ -744,20 +729,6 @@
           <div class="hero-actions">
             <a href="https://mulastar.com/register.php?ref=Sydney" class="btn-primary" target="_blank"><i class="fas fa-rocket"></i> Start Earning Now</a>
             <a href="https://wa.me/254745656143?text=Hello%20Mentor%20Sydney,%20guide%20me%20through." class="btn-ghost" target="_blank"><i class="fab fa-whatsapp"></i> Talk to Mentor</a>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat">
-              <div class="stat-icon g"><i class="fas fa-shield-halved"></i></div>
-              <div class="hero-stat-text">Registered in Kenya<span>BN-2RCLQZTJ</span></div>
-            </div>
-            <div class="hero-stat">
-              <div class="stat-icon gr"><i class="fas fa-bolt"></i></div>
-              <div class="hero-stat-text">Instant Cashout<span>M-Pesa, Airtel, T-Kash</span></div>
-            </div>
-            <div class="hero-stat">
-              <div class="stat-icon b"><i class="fas fa-gift"></i></div>
-              <div class="hero-stat-text">KSH 300 Free Bonus<span>Credited on registration</span></div>
-            </div>
           </div>
         </div>
 
@@ -1152,22 +1123,22 @@
       
       <div class="rv-friend">
         <div class="rv-friend-name">B1 (from A1)</div>
-        <div class="rv-friend-earn">+KSH 100 to you</div>
+        <div class="rv-friend-earn">+KSH 100</div>
       </div>
 
       <div class="rv-friend">
         <div class="rv-friend-name">B2 (from A1)</div>
-        <div class="rv-friend-earn">+KSH 100 to you</div>
+        <div class="rv-friend-earn">+KSH 100</div>
       </div>
 
       <div class="rv-friend">
         <div class="rv-friend-name">B3 (from A2)</div>
-        <div class="rv-friend-earn">+KSH 100 to you</div>
+        <div class="rv-friend-earn">+KSH 100</div>
       </div>
 
       <div class="rv-friend">
         <div class="rv-friend-name">B4 (from A2)</div>
-        <div class="rv-friend-earn">+KSH 100 to you</div>
+        <div class="rv-friend-earn">+KSH 100</div>
       </div>
 
     </div>
@@ -1189,29 +1160,8 @@
         <div class="rv-friend-name">C3 (from B2)</div>
         <div class="rv-friend-earn">+KSH 50</div>
       </div>
-
       <div class="rv-friend">
         <div class="rv-friend-name">C4 (from B2)</div>
-        <div class="rv-friend-earn">+KSH 50</div>
-      </div>
-
-      <div class="rv-friend">
-        <div class="rv-friend-name">C5 (from B3)</div>
-        <div class="rv-friend-earn">+KSH 50</div>
-      </div>
-
-      <div class="rv-friend">
-        <div class="rv-friend-name">C6 (from B3)</div>
-        <div class="rv-friend-earn">+KSH 50</div>
-      </div>
-
-      <div class="rv-friend">
-        <div class="rv-friend-name">C7 (from B4)</div>
-        <div class="rv-friend-earn">+KSH 50</div>
-      </div>
-
-      <div class="rv-friend">
-        <div class="rv-friend-name">C8 (from B4)</div>
         <div class="rv-friend-earn">+KSH 50</div>
       </div>
 
