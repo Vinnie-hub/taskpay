@@ -1,0 +1,27 @@
+# robots.txt for Taskchatpay.com
+# Generated: 2026-04-21
+
+User-agent: *
+Allow: /
+
+# Allow all major search engine bots explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Disallow admin/backend paths (add your real ones)
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /private/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://taskchatpay.com/sitemap.xml
