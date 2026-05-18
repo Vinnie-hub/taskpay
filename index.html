@@ -549,17 +549,25 @@
       </div>
     </div>
 
-    <!-- WhatsApp float -->
     <div class="float-wa-wrap">
-      <span class="float-wa-label">Chat with Agent</span>
+      <div class="wa-message" id="waMessage">
+        <button class="wa-close" id="waCloseBtn" aria-label="Close message">
+          ×
+        </button>
+        <div class="wa-content">
+          <span class="wa-question">Need help?</span>
+          <span class="wa-action">Chat with agent →</span>
+        </div>
+      </div>
       <a
         href="https://wa.me/254729743223"
         class="float-wa"
         target="_blank"
-        rel="noopener"
-        aria-label="Chat with our Agent on WhatsApp"
-        ><i class="fab fa-whatsapp"></i
-      ></a>
+        rel="noopener noreferrer"
+        aria-label="Chat with our support team on WhatsApp"
+      >
+        <i class="fab fa-whatsapp"></i>
+      </a>
     </div>
 
     <!-- Sticky bar -->

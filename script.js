@@ -1432,6 +1432,22 @@
           }
         });
 
+  const closeBtn = document.getElementById('waCloseBtn');
+  const messageBox = document.getElementById('waMessage');
+  
+  const isClosedThisSession = sessionStorage.getItem('waMessageClosed');
+  
+  if (isClosedThisSession === 'true') {
+    messageBox.classList.add('hidden');
+  }
+  
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    messageBox.classList.add('hidden');
+
+    sessionStorage.setItem('waMessageClosed', 'true');
+  });
+
         /* ─── EARNINGS CALCULATOR ────────────────────────────────────── */
         const cChats = $("cChats"),
           cRate = $("cRate"),
