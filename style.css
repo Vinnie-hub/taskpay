@@ -560,7 +560,6 @@
     letter-spacing: 0.02em;
     max-width: 120px;
     white-space: normal;
-    line-height: 1.2;  
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -3027,42 +3026,6 @@
         align-items: center;
         gap: 0.35rem;
       }
-
-      /* ═══════════════════════════════════════════════════════════
-         STICKY BAR
-      ═══════════════════════════════════════════════════════════ */
-      .sticky-bar {
-        position: fixed;
-        bottom: 0;
-        inset-inline: 0;
-        z-index: 795;
-        background: rgba(245, 243, 255, 0.97);
-        backdrop-filter: blur(24px);
-        border-top: 1px solid var(--border-2);
-        padding: 0.55rem 0;
-        transform: translateY(100%);
-        transition: transform 0.3s;
-        box-shadow: 0 -4px 24px rgba(124, 58, 237, 0.1);
-      }
-      .sticky-bar.show {
-        transform: none;
-      }
-      .sticky-in {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-      }
-      .sticky-txt {
-        font-weight: 700;
-        font-size: 0.82rem;
-        color: var(--text-0);
-      }
-      .sticky-sub {
-        font-size: 0.7rem;
-        color: var(--text-3);
-      }
-
       /* ═══════════════════════════════════════════════════════════
          FLOAT WA BUTTON
       ═══════════════════════════════════════════════════════════ */
