@@ -1324,13 +1324,12 @@
           $("omName").textContent = c.name;
           $("opOld").textContent = c.old;
           $("opNow").textContent = c.fee;
-          $("opDisc").textContent = "Save " + c.disc + " Today";
           $("omRibbon").textContent = c.disc + " OFF";
           $("omBadge").textContent = c.disc + " OFF — LIMITED TIME";
           $("opSave").textContent =
             "✅ You save " + c.save + " — limited time!";
           $("omUrgency").textContent = c.urg;
-          $("offerCtaTxt").textContent = "Register Now — " + c.fee;
+          $("offerCtaTxt").textContent = "Register Now — ";
           $("omBg").style.backgroundImage = "url('" + c.img + "')";
           offerOv.classList.add("on");
           document.body.style.overflow = "hidden";

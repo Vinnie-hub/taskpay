@@ -3670,16 +3670,6 @@
         text-transform: uppercase;
         color: var(--text-3);
       }
-      .op-badge {
-        display: inline-block;
-        background: linear-gradient(135deg, var(--red), #fca5a5);
-        color: #fff;
-        padding: 0.18rem 0.875rem;
-        border-radius: 7px;
-        font-size: 0.67rem;
-        font-weight: 800;
-        margin: 0.45rem 0;
-      }
       .op-save {
         font-size: 0.82rem;
         font-weight: 700;
