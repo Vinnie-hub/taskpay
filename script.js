@@ -1329,7 +1329,7 @@
           $("opSave").textContent =
             "✅ You save " + c.save + " — limited time!";
           $("omUrgency").textContent = c.urg;
-          $("offerCtaTxt").textContent = "Register Now — ";
+          $("offerCtaTxt").textContent = "Register Here";
           $("omBg").style.backgroundImage = "url('" + c.img + "')";
           offerOv.classList.add("on");
           document.body.style.overflow = "hidden";
