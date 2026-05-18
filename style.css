@@ -4397,9 +4397,6 @@
         .hero-stats-bar {
           display: none;
         }
-        .lab-counter {
-          display: none;
-        }
       }
       @media (max-width: 639px) {
         .nav-btn-ghost {
