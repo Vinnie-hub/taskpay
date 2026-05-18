@@ -554,6 +554,17 @@
           background: rgba(255, 255, 255, 0.1);
         }
       }
+      @media (max-width: 768px) {
+  .logo-name {
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    max-width: 120px;
+    white-space: normal;
+    line-height: 1.2;  
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 
       /* Right controls */
       .nav-right {
