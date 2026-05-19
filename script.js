@@ -1,7 +1,5 @@
 (function () {
         "use strict";
-
-        /* ── CONSTANTS & UTILS ──────────────────────────────────── */
         const REG = "https://Starhela.com/register.php?ref=sydney";
         const $ = (id) => document.getElementById(id);
         const rand = (a) => a[Math.floor(Math.random() * a.length)];
@@ -15,7 +13,7 @@
           return a;
         }
 
-        /* ── PAGE LOADER ─────────────────────────────────────────── */
+        // Page Loader
         window.addEventListener("load", () => {
           setTimeout(() => {
             const l = $("pageLoader");
@@ -23,7 +21,7 @@
           }, 800);
         });
 
-        /* ── LIVE ACTIVITY BAR ───────────────────────────────────── */
+        // Live Activity Bar
         const LAB_EVENTS = [
           "15,000+ Verified Earners",
           "$890K+ Paid Out",
@@ -39,20 +37,15 @@
           "Piga Gumzo kwa Kiswahili",
           "Tafsiri Otomatiki kwa Wateja",
         ];
-
-        // Populate the ticker feed
-        const labFeed = document.getElementById("labFeed");
+        const labFeed = $("labFeed");
         if (labFeed) {
-          // Duplicate array for seamless looping
           [...LAB_EVENTS, ...LAB_EVENTS].forEach((event) => {
             const span = document.createElement("span");
-            span.className = "lab-item"; // ← MUST match CSS (.lab-item)
+            span.className = "lab-item";
             span.innerHTML = `<i class="fas fa-check-circle"></i>${event}`;
             labFeed.appendChild(span);
           });
         }
-
-        // Update online counter
         let labOnline = 3847;
         function updateLabCounter() {
           if (document.hidden) return;
@@ -65,25 +58,20 @@
         }
         setInterval(updateLabCounter, 2000);
 
-        /* LIVE POPUP NOTIFICATIONS */
-
+        // Live Toast Notifications
         class LiveNotifications {
           constructor() {
             this.container = null;
             this.queue = [];
             this.isShowing = false;
             this.lastUser = null;
-
             this.init();
           }
-
           init() {
-            // Create toast container
             this.container = document.createElement("div");
             this.container.className = "live-toast-container";
             document.body.appendChild(this.container);
           }
-
           getRandomUser() {
             const users = [
               { name: "Lacostta", country: null, avatar: "L" },
@@ -106,31 +94,20 @@
               { name: "Musa", country: "Nigeria", flag: "🇳🇬" },
               { name: "Grace", country: "Uganda", flag: "🇺🇬" },
               { name: "Elena", country: "Russia", flag: "🇷🇺" },
-              { name: "Yuki", country: "Japan", flag: "🇯🇵" },
-              { name: "Chen", country: "China", flag: "🇨🇳" },
-              { name: "Nathan", country: "New Zealand", flag: "🇳🇿" },
-              { name: "Zara", country: "Pakistan", flag: "🇵🇰" },
-              { name: "Ali", country: "Saudi Arabia", flag: "🇸🇦" },
               { name: "Joy", country: null, avatar: "J" },
               { name: "Victor", country: "France", flag: "🇫🇷" },
               { name: "Linda", country: "Germany", flag: "🇩🇪" },
-              { name: "Tariq", country: "Egypt", flag: "🇪🇬" },
               { name: "Diana", country: null, avatar: "D" },
             ];
-
-            let randomUser;
-
+            let u;
             do {
-              randomUser = users[Math.floor(Math.random() * users.length)];
-            } while (this.lastUser && randomUser.name === this.lastUser.name);
-
-            this.lastUser = randomUser;
-
-            return randomUser;
+              u = users[Math.floor(Math.random() * users.length)];
+            } while (this.lastUser && u.name === this.lastUser.name);
+            this.lastUser = u;
+            return u;
           }
-
           getRandomOnlineMessage() {
-            const messages = [
+            const m = [
               "is online now",
               "just connected",
               "started chatting",
@@ -139,123 +116,60 @@
               "is waiting online",
               "is available for chat",
               "joined a conversation",
-              "has send a request",
+              "has sent a request",
               "just signed in",
               "is currently active",
               "joined moments ago",
             ];
-
-            return messages[Math.floor(Math.random() * messages.length)];
+            return m[Math.floor(Math.random() * m.length)];
           }
-
           showToast(user) {
             const toast = document.createElement("div");
             toast.className = "live-toast";
-
             const avatar = user.avatar || user.name.charAt(0);
-
             const flagHtml = user.flag
               ? `<span class="live-toast-flag">${user.flag}</span>`
               : "";
-
             const locationText = user.country ? `from ${user.country}` : "";
-
             const message = this.getRandomOnlineMessage();
-
-            toast.innerHTML = `
-      <div class="live-toast-avatar">
-        ${avatar}
-      </div>
-
-      <div class="live-toast-content">
-        <div class="live-toast-top">
-          ${flagHtml}
-          <span class="live-toast-name">${user.name}</span>
-        </div>
-
-        <div class="live-toast-message">
-          ${message}
-          ${locationText}
-          <span class="live-toast-status"></span>
-        </div>
-      </div>
-    `;
-
+            toast.innerHTML = `<div class="live-toast-avatar">${avatar}</div><div class="live-toast-content"><div class="live-toast-top">${flagHtml}<span class="live-toast-name">${user.name}</span></div><div class="live-toast-message">${message} ${locationText}<span class="live-toast-status"></span></div></div>`;
             this.container.appendChild(toast);
-
-            // Trigger animation
-            requestAnimationFrame(() => {
-              toast.classList.add("show");
-            });
-
-            // Auto remove
+            requestAnimationFrame(() => toast.classList.add("show"));
             setTimeout(() => {
               toast.classList.remove("show");
               toast.classList.add("toast-hide");
-
-              setTimeout(() => {
-                toast.remove();
-              }, 400);
+              setTimeout(() => toast.remove(), 400);
             }, 4000);
           }
-
           addToQueue(user) {
             this.queue.push(user);
-
-            if (!this.isShowing) {
-              this.processQueue();
-            }
+            if (!this.isShowing) this.processQueue();
           }
-
           processQueue() {
             if (this.queue.length === 0) {
               this.isShowing = false;
               return;
             }
-
             this.isShowing = true;
-
             const user = this.queue.shift();
-
             this.showToast(user);
-
-            setTimeout(() => {
-              this.processQueue();
-            }, 4500);
+            setTimeout(() => this.processQueue(), 4500);
           }
-
-          // Random simulation
           startSimulation(min = 8000, max = 15000) {
             const simulate = () => {
-              const user = this.getRandomUser();
-
-              this.addToQueue(user);
-
-              const nextDelay =
-                Math.floor(Math.random() * (max - min + 1)) + min;
-
-              setTimeout(simulate, nextDelay);
+              this.addToQueue(this.getRandomUser());
+              setTimeout(
+                simulate,
+                Math.floor(Math.random() * (max - min + 1)) + min,
+              );
             };
-
             simulate();
           }
-
-          // Manual trigger
-          notifyUserOnline(userName, country = null, flag = null) {
-            this.addToQueue({
-              name: userName,
-              country,
-              flag,
-              avatar: userName.charAt(0),
-            });
-          }
         }
-
         const liveNotifications = new LiveNotifications();
-
         liveNotifications.startSimulation();
 
-        /* ── i18n / LANGUAGE ─────────────────────────────────────── */
+        // i18n
         const TRANSLATIONS = {
           en: {
             live_label: "Earning right now —",
@@ -289,10 +203,9 @@
             ready_to_chat: "ready to chat",
             req_sub: `New requests arrive regularly. Every completed conversation adds to your balance. <strong>Chat in Kiswahili</strong> — clients automatically receive translated messages on their side.`,
             requests_live: "requests live",
-            auto_refresh: "Auto-refreshing",
             view_all_profiles: "View All Profiles &amp; Start Chatting",
             view_all_sub:
-              "Register free to access 500+ verified clients from 100+ countries",
+              "Register free to access 5,000+ verified clients from 100+ countries",
             simple_process: "Simple Process",
             start_earning: "Start earning in",
             three_steps: "3 easy steps",
@@ -353,10 +266,9 @@
             t2_title: "Friendly Companionship",
             t2_desc:
               "Many clients simply want a genuine conversation. Listen, be kind, share a laugh.",
-            travel_talk: "Travel Talk",
-            t3_title: "Travel &amp; Places",
+            t3_title: "Teach foreigners Swahili",
             t3_desc:
-              "Share local gems and travel tips for people planning visits to your country.",
+              "Teach Kiswahili and other African languages with global learners eager to learn and connect with Africans",
             advice_opinions: "Advice &amp; Opinions",
             t4_title: "Life Advice &amp; Stories",
             t4_desc:
@@ -396,10 +308,9 @@
             ready_to_chat: "tayari kupiga gumzo",
             req_sub: `Maombi mapya yanafika mara kwa mara. <strong>Piga gumzo kwa Kiswahili</strong> — wateja hupokea ujumbe uliotafsiriwa kwa upande wao.`,
             requests_live: "maombi ya moja kwa moja",
-            auto_refresh: "Inasasishwa otomatiki",
             view_all_profiles: "Angalia Maelezo Yote &amp; Anza Kupiga Gumzo",
             view_all_sub:
-              "Jisajili bila malipo kupata wateja 500+ kutoka nchi 100+",
+              "Jisajili bila malipo kupata wateja 5,000+ kutoka nchi 100+",
             simple_process: "Mchakato Rahisi",
             start_earning: "Anza kupata pesa kwa",
             three_steps: "hatua 3 rahisi",
@@ -455,9 +366,9 @@
             highest_demand: "Mahitaji ya Juu",
             t2_title: "Urafiki wa Kirafiki",
             t2_desc: "Wateja wengi wanataka mazungumzo ya kweli tu.",
-            travel_talk: "Mazungumzo ya Safari",
-            t3_title: "Safari &amp; Maeneo",
-            t3_desc: "Shiriki vivutio vya ndani na vidokezo vya safari.",
+            t3_title: "Funza Wageni Kiswahili",
+            t3_desc:
+              "Funza Kiswahili na lugha nyingine za Kiafrika kwa wanafunzi wa kimataifa.",
             advice_opinions: "Ushauri &amp; Maoni",
             t4_title: "Ushauri wa Maisha &amp; Hadithi",
             t4_desc:
@@ -466,7 +377,6 @@
             view_btn: "Angalia Maelezo",
           },
         };
-
         let currentLang = "en";
         window.setLang = function (lang) {
           currentLang = lang;
@@ -491,13 +401,12 @@
             });
           }
         };
-
         window.scrollToReq = function () {
           const el = $("req-sec");
           if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
         };
 
-        /* ── COUNTRIES DATA ──────────────────────────────────────── */
+        // Countries
         const COUNTRIES = [
           {
             name: "Kenya",
@@ -586,7 +495,7 @@
           })
           .catch(() => {});
 
-        /* ── ALL 27 PROFILES ─────────────────────────────────────── */
+        // All 27 profiles
         const ALL_PROFILES = [
           {
             id: 1,
@@ -594,8 +503,8 @@
             age: 65,
             loc: "London, UK",
             flag: "🇬🇧",
-            desc: "Retired teacher seeking meaningful conversations about books, travel, and life.",
-            full: "Hello! I'm Emily, a retired literature teacher from London with 40 years of experience. I love discussing books, philosophy, and hearing about life in Africa!",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Emily, a retired literature teacher from London. I'd love to chat with you about books, travel, and what life is like where you are!",
             price: 4,
             tags: ["Friendly", "Patient", "Well-read", "Travel"],
             langs: ["English", "French"],
@@ -609,8 +518,8 @@
             age: 58,
             loc: "New York, USA",
             flag: "🇺🇸",
-            desc: "Business executive passionate about cultural exchange and innovation.",
-            full: "Hello, I'm Robert! After 30+ years in international business, I'm passionate about cultural exchange and connecting with people from all walks of life.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Robert from New York. After 30+ years in international business, I'd love to chat with you about culture, world affairs, and new perspectives.",
             price: 6,
             tags: ["Business", "Mentor", "Cultural", "Professional"],
             langs: ["English", "Spanish"],
@@ -624,8 +533,8 @@
             age: 68,
             loc: "Toronto, Canada",
             flag: "🇨🇦",
-            desc: "Looking for companionship and genuine conversations about family and daily life.",
-            full: "Hi there! I'm Linda, a retired nurse from Toronto who loves meeting new people and hearing about different cultures.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Linda from Toronto. I'd love to chat with you about family, daily life, and hear about your experiences — genuine conversation is all I'm after.",
             price: 8,
             tags: ["Companionship", "Patient", "Empathetic", "Family"],
             langs: ["English"],
@@ -639,8 +548,8 @@
             age: 54,
             loc: "Manchester, UK",
             flag: "🇬🇧",
-            desc: "Software engineer who loves deep conversations about tech and science.",
-            full: "Hey! I'm Michael, a software engineer from Manchester fascinated by different cultures.",
+            desc: "Wants to chat with you",
+            full: "Hey! I'm Michael from Manchester. I'd love to chat with you about technology, science, and the big ideas shaping our world.",
             price: 3,
             tags: ["Tech", "Curious", "Open-minded", "Thoughtful"],
             langs: ["English"],
@@ -654,8 +563,8 @@
             age: 61,
             loc: "Melbourne, Australia",
             flag: "🇦🇺",
-            desc: "Retired doctor seeking warm conversations about health and everyday life.",
-            full: "Hello! I'm Susan, a recently retired GP from Melbourne. I love connecting with people from Africa.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm Susan, a recently retired doctor from Melbourne. I'd love to chat with you about health, wellness, and what everyday life looks like for you.",
             price: 5,
             tags: ["Warm", "Listener", "Wellness", "Storyteller"],
             langs: ["English"],
@@ -669,8 +578,8 @@
             age: 47,
             loc: "Doha, Qatar",
             flag: "🇶🇦",
-            desc: "Entrepreneur passionate about culture, food, and cross-cultural friendships.",
-            full: "Hi! I'm Ahmed from Doha. I've visited 40+ countries and love learning about new cultures.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Ahmed from Doha. I've visited 40+ countries and I'd love to chat with you about food, travel, and what makes your culture unique.",
             price: 7,
             tags: ["Adventurous", "Foodie", "Cultural", "Business"],
             langs: ["English", "Arabic"],
@@ -684,8 +593,8 @@
             age: 52,
             loc: "Amsterdam, Netherlands",
             flag: "🇳🇱",
-            desc: "Art curator who loves discussing African art, fashion, and storytelling.",
-            full: "Hi! I'm Helena from Amsterdam. I work in contemporary art and I'm deeply fascinated by African creative traditions.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Helena from Amsterdam. I work in contemporary art and I'd love to chat with you about African art, fashion, and creative traditions.",
             price: 5,
             tags: ["Art", "Fashion", "Stories", "Creative"],
             langs: ["English", "Dutch"],
@@ -699,8 +608,8 @@
             age: 44,
             loc: "Madrid, Spain",
             flag: "🇪🇸",
-            desc: "Chef and food lover eager to learn about African cuisine and traditions.",
-            full: "Hola! I'm Carlos, a professional chef from Madrid obsessed with global food cultures.",
+            desc: "Wants to chat with you",
+            full: "Hola! I'm Carlos, a chef from Madrid. I'd love to chat with you about local food, cooking traditions, and the flavours of your region.",
             price: 4,
             tags: ["Food", "Culture", "Travel", "Friendly"],
             langs: ["English", "Spanish"],
@@ -714,8 +623,8 @@
             age: 39,
             loc: "Sydney, Australia",
             flag: "🇦🇺",
-            desc: "Teacher seeking genuine conversations about education and daily life.",
-            full: "Hi! I'm Sophia from Sydney. I'm a primary school teacher curious about education systems in Africa.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Sophia from Sydney. I'd love to chat with you about education, raising kids, and what daily life looks like in your part of the world.",
             price: 3,
             tags: ["Education", "Curious", "Friendly", "Kind"],
             langs: ["English"],
@@ -729,8 +638,8 @@
             age: 53,
             loc: "London, UK",
             flag: "🇬🇧",
-            desc: "Retired banker enjoying meaningful conversations and language exchange.",
-            full: "Hello! I'm James from London, a retired banker who now has all the time in the world for great conversations.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm James from London, a retired banker. I'd love to chat with you about travel, culture, and stories from your everyday life.",
             price: 6,
             tags: ["Finance", "Culture", "Travel", "Mentor"],
             langs: ["English"],
@@ -744,8 +653,8 @@
             age: 49,
             loc: "Paris, France",
             flag: "🇫🇷",
-            desc: "Fashion designer passionate about African textile and cultural stories.",
-            full: "Bonjour! I'm Marie from Paris. I work in fashion and I'm deeply inspired by African textiles.",
+            desc: "Wants to chat with you",
+            full: "Bonjour! I'm Marie from Paris. I work in fashion and I'd love to chat with you about African textiles, art, and creative culture.",
             price: 7,
             tags: ["Fashion", "Art", "Culture", "Creative"],
             langs: ["English", "French"],
@@ -759,8 +668,8 @@
             age: 62,
             loc: "Toronto, Canada",
             flag: "🇨🇦",
-            desc: "Widower seeking warm, genuine daily conversations and companionship.",
-            full: "Hello. I'm George from Toronto. Since losing my wife I've been looking for genuine conversations.",
+            desc: "Wants to chat with you",
+            full: "Hello. I'm George from Toronto. I'd love to chat with you about life stories, everyday moments, and the things that matter most to you.",
             price: 4,
             tags: ["Companionship", "Gentle", "Listener", "Loyal"],
             langs: ["English"],
@@ -774,8 +683,8 @@
             age: 36,
             loc: "Berlin, Germany",
             flag: "🇩🇪",
-            desc: "Journalist writing about African stories and looking for authentic voices.",
-            full: "Hi! I'm Nina, a journalist from Berlin covering African culture and society.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Nina, a journalist from Berlin. I'd love to chat with you about culture, society, and authentic stories from your life.",
             price: 5,
             tags: ["Media", "Stories", "Curious", "Insightful"],
             langs: ["English", "German"],
@@ -789,8 +698,8 @@
             age: 55,
             loc: "Boston, USA",
             flag: "🇺🇸",
-            desc: "University professor researching African history and modern culture.",
-            full: "Hello! I'm David, a history professor at Boston University with a deep love for African history.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm David, a history professor from Boston. I'd love to chat with you about African history, culture, and the ideas shaping today's world.",
             price: 8,
             tags: ["Academic", "History", "Culture", "Thoughtful"],
             langs: ["English"],
@@ -804,8 +713,8 @@
             age: 42,
             loc: "Edinburgh, UK",
             flag: "🇬🇧",
-            desc: "Nurse and mother looking for genuine connections and daily conversation.",
-            full: "Hi there! I'm Amelia from Edinburgh. I'm a busy nurse and mum who loves warm, genuine chats.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Amelia from Edinburgh. I'd love to chat with you about family, health, and the small moments that make up daily life.",
             price: 3,
             tags: ["Warm", "Friendly", "Family", "Health"],
             langs: ["English"],
@@ -819,8 +728,8 @@
             age: 50,
             loc: "Dubai, UAE",
             flag: "🇦🇪",
-            desc: "Entrepreneur interested in pan-African business and culture exchange.",
-            full: "Salaam! I'm Omar from Dubai, a business owner with growing interests in Africa.",
+            desc: "Wants to chat with you",
+            full: "Salaam! I'm Omar from Dubai. I'd love to chat with you about business, travel, and pan-African culture and opportunity.",
             price: 7,
             tags: ["Business", "Entrepreneurship", "Travel", "Visionary"],
             langs: ["English", "Arabic"],
@@ -834,8 +743,8 @@
             age: 67,
             loc: "Dublin, Ireland",
             flag: "🇮🇪",
-            desc: "Retired librarian with a love for storytelling and African literature.",
-            full: "Hello! I'm Grace from Dublin, a former librarian passionate about African literature.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm Grace from Dublin, a former librarian. I'd love to chat with you about African literature, stories, and the power of a good book.",
             price: 4,
             tags: ["Books", "Stories", "Literature", "Gentle"],
             langs: ["English"],
@@ -849,8 +758,8 @@
             age: 46,
             loc: "Zurich, Switzerland",
             flag: "🇨🇭",
-            desc: "Banker and traveller who has visited 12 African countries.",
-            full: "Hi! I'm Peter from Zurich. I've visited 12 African countries and I'm eager to connect with locals.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Peter from Zurich. I've visited 12 African countries and I'd love to chat with you about travel, adventure, and local culture.",
             price: 6,
             tags: ["Travel", "Finance", "Culture", "Adventurous"],
             langs: ["English", "German"],
@@ -864,8 +773,8 @@
             age: 38,
             loc: "Stockholm, Sweden",
             flag: "🇸🇪",
-            desc: "Environmental scientist interested in African ecosystems and conservation.",
-            full: "Hello! I'm Anna from Stockholm. I work in environmental science and I'm fascinated by African wildlife.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm Anna from Stockholm. I'd love to chat with you about nature, wildlife, and how communities in your area connect with the environment.",
             price: 5,
             tags: ["Nature", "Science", "Conservation", "Curious"],
             langs: ["English", "Swedish"],
@@ -879,8 +788,8 @@
             age: 59,
             loc: "Rome, Italy",
             flag: "🇮🇹",
-            desc: "Restaurateur passionate about African food culture and spices.",
-            full: "Ciao! I'm Marco from Rome, a restaurant owner obsessed with African food traditions.",
+            desc: "Wants to chat with you",
+            full: "Ciao! I'm Marco from Rome. I'd love to chat with you about food, recipes, and the culinary traditions that make your culture special.",
             price: 4,
             tags: ["Food", "Culture", "Travel", "Warm"],
             langs: ["English", "Italian"],
@@ -894,8 +803,8 @@
             age: 45,
             loc: "Vancouver, Canada",
             flag: "🇨🇦",
-            desc: "Social worker seeking genuine conversations and cultural understanding.",
-            full: "Hello! I'm Lisa from Vancouver. I work in social services and I'm deeply interested in different cultures.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm Lisa from Vancouver. I'd love to chat with you about culture, everyday life, and the experiences that have shaped who you are.",
             price: 3,
             tags: ["Empathy", "Social", "Culture", "Listener"],
             langs: ["English", "French"],
@@ -909,8 +818,8 @@
             age: 63,
             loc: "Chicago, USA",
             flag: "🇺🇸",
-            desc: "Retired firefighter seeking warm daily conversations and new friendships.",
-            full: "Hey! I'm Tom, a retired Chicago firefighter. I'm now looking to fill my days with great conversations.",
+            desc: "Wants to chat with you",
+            full: "Hey! I'm Tom, a retired firefighter from Chicago. I'd love to chat with you about sports, life stories, and what makes your community tick.",
             price: 5,
             tags: ["Friendly", "Stories", "Sports", "Loyal"],
             langs: ["English"],
@@ -924,8 +833,8 @@
             age: 41,
             loc: "Vienna, Austria",
             flag: "🇦🇹",
-            desc: "Pianist and music teacher curious about African musical traditions.",
-            full: "Hello! I'm Julia from Vienna. I teach music and I'm deeply curious about African musical traditions.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm Julia from Vienna. I'd love to chat with you about music, art, and the rich cultural traditions in your part of the world.",
             price: 6,
             tags: ["Music", "Art", "Culture", "Creative"],
             langs: ["English", "German"],
@@ -939,8 +848,8 @@
             age: 53,
             loc: "Casablanca, Morocco",
             flag: "🇲🇦",
-            desc: "Architect fascinated by African architecture and urban culture.",
-            full: "Hello! I'm Hassan from Casablanca. I'm an architect who studies pan-African urban design.",
+            desc: "Wants to chat with you",
+            full: "Hello! I'm Hassan from Casablanca. I'd love to chat with you about architecture, design, and how cities and communities are evolving across Africa.",
             price: 7,
             tags: ["Architecture", "Culture", "Urban", "Creative"],
             langs: ["English", "Arabic"],
@@ -954,8 +863,8 @@
             age: 57,
             loc: "Lyon, France",
             flag: "🇫🇷",
-            desc: "Teacher and grandmother looking for warm, meaningful daily conversation.",
-            full: "Bonjour! I'm Claire from Lyon. I'm a retired teacher and grandmother looking for genuine human connection.",
+            desc: "Wants to chat with you",
+            full: "Bonjour! I'm Claire from Lyon. I'd love to chat with you about family, everyday stories, and the little things that give life meaning.",
             price: 4,
             tags: ["Warm", "Family", "Gentle", "Stories"],
             langs: ["English", "French"],
@@ -969,8 +878,8 @@
             age: 48,
             loc: "Dublin, Ireland",
             flag: "🇮🇪",
-            desc: "Software developer and travel enthusiast who loves authentic conversations.",
-            full: "Hi! I'm Mark from Dublin. I'm a developer who travels widely and loves authentic cultural conversations.",
+            desc: "Wants to chat with you",
+            full: "Hi! I'm Mark from Dublin. I'd love to chat with you about tech, travel, and what authentic cultural life looks like where you are.",
             price: 5,
             tags: ["Tech", "Travel", "Culture", "Open-minded"],
             langs: ["English"],
@@ -984,8 +893,8 @@
             age: 44,
             loc: "Lisbon, Portugal",
             flag: "🇵🇹",
-            desc: "Therapist seeking warm conversations about life, wellness, and culture.",
-            full: "Olá! I'm Elena from Lisbon, a therapist interested in cross-cultural approaches to wellbeing.",
+            desc: "Wants to chat with you",
+            full: "Olá! I'm Elena from Lisbon. I'd love to chat with you about wellness, culture, and the different ways people around the world approach life.",
             price: 6,
             tags: ["Wellness", "Empathy", "Culture", "Listener"],
             langs: ["English", "Portuguese"],
@@ -995,8 +904,8 @@
           },
         ];
 
-        /* ── PROFILE GRID ────────────────────────────────────────── */
-        const GRID_SLOTS = 9,
+        // Profile Grid
+        const GRID_SLOTS = 6,
           ROTATE_INTERVAL = 5000,
           STAGGER_MS = 170,
           FADE_OUT_MS = 260,
@@ -1007,7 +916,6 @@
           rotTimer = null,
           isRotating = false;
         const slotLastChanged = new Array(GRID_SLOTS).fill(0);
-
         function refillQueue() {
           profileQueue = [...profileQueue, ...shuffle(ALL_PROFILES)];
         }
@@ -1035,7 +943,12 @@
         function buildCardInner(p) {
           const t = TRANSLATIONS[currentLang];
           const stars = "★".repeat(Math.random() < 0.3 ? 4 : 5);
-          return `<div class="prf-top"><img src="${p.img}" alt="${p.name}, ${p.age} from ${p.loc}" class="prf-img" loading="lazy" /><div class="prf-img-overlay"></div><div class="prf-badge${p.badgeClass ? " " + p.badgeClass : ""}">${p.badge}</div><div class="prf-online"><div class="prf-online-dot"></div></div><div class="prf-identity"><div class="prf-name">${p.name}, ${p.age}</div><div class="prf-location">${p.flag} ${p.loc}</div></div></div><div class="prf-body"><div class="prf-rate-row"><div class="prf-rate">$${p.price}<span>/hr</span></div><div class="prf-stars" aria-label="${stars.length} stars">${stars}</div></div><p class="prf-desc">${p.desc}</p><div class="prf-tags">${p.tags.map((tag) => `<span class="prf-tag">${tag}</span>`).join("")}</div><div class="prf-actions"><button class="prf-btn-accept" data-id="${p.id}" aria-label="Accept chat request from ${p.name}"><i class="fas fa-check"></i> ${t.accept_btn || "Accept Request"}</button><button class="prf-btn-view" data-id="${p.id}" aria-label="View ${p.name}'s profile"><i class="fas fa-user"></i> ${t.view_btn || "View Profile"}</button></div></div>`;
+          // FIXED: tags now actually render on cards
+          const tagsHtml = p.tags
+            .slice(0, 3)
+            .map((tag) => `<span class="prf-tag">${tag}</span>`)
+            .join("");
+          return `<div class="prf-top"><img src="${p.img}" alt="${p.name}, ${p.age} from ${p.loc}" class="prf-img" loading="lazy" /><div class="prf-img-overlay"></div><div class="prf-badge${p.badgeClass ? " " + p.badgeClass : ""}">${p.badge}</div><div class="prf-online"><div class="prf-online-dot"></div></div><div class="prf-identity"><div class="prf-name">${p.name}, ${p.age}</div><div class="prf-location">${p.flag} ${p.loc}</div></div></div><div class="prf-body"><div class="prf-rate-row"><div class="prf-rate">$${p.price}<span>/hr</span></div><div class="prf-stars" aria-label="${stars.length} stars">${stars}</div></div><p class="prf-desc">${p.desc}</p><div class="prf-tags">${tagsHtml}</div><div class="prf-actions"><button class="prf-btn-accept" data-id="${p.id}" aria-label="Accept chat request from ${p.name}"><i class="fas fa-check"></i> ${t.accept_btn || "Accept Request"}</button><button class="prf-btn-view" data-id="${p.id}" aria-label="View ${p.name}'s profile"><i class="fas fa-user"></i> ${t.view_btn || "View Profile"}</button></div></div>`;
         }
 
         function setupGridDelegation(grid) {
@@ -1124,13 +1037,13 @@
                 card.style.transition = "none";
                 card.style.opacity = "0";
                 card.style.transform = "translateY(12px) scale(0.97)";
-                requestAnimationFrame(() => {
+                requestAnimationFrame(() =>
                   requestAnimationFrame(() => {
                     card.style.transition = `opacity ${FADE_IN_MS}ms ease,transform ${FADE_IN_MS}ms cubic-bezier(0.34,1.56,0.64,1)`;
                     card.style.opacity = "1";
                     card.style.transform = "translateY(0) scale(1)";
-                  });
-                });
+                  }),
+                );
                 slotProfiles[slotIdx] = newProfile;
                 slotLastChanged[slotIdx] = Date.now();
                 completedCount++;
@@ -1431,21 +1344,21 @@
           }
         });
 
-  const closeBtn = document.getElementById('waCloseBtn');
-  const messageBox = document.getElementById('waMessage');
-  
-  const isClosedThisSession = sessionStorage.getItem('waMessageClosed');
-  
-  if (isClosedThisSession === 'true') {
-    messageBox.classList.add('hidden');
-  }
-  
-  closeBtn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    messageBox.classList.add('hidden');
+        const closeBtn = document.getElementById("waCloseBtn");
+        const messageBox = document.getElementById("waMessage");
 
-    sessionStorage.setItem('waMessageClosed', 'true');
-  });
+        const isClosedThisSession = sessionStorage.getItem("waMessageClosed");
+
+        if (isClosedThisSession === "true") {
+          messageBox.classList.add("hidden");
+        }
+
+        closeBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          messageBox.classList.add("hidden");
+
+          sessionStorage.setItem("waMessageClosed", "true");
+        });
 
         /* ─── EARNINGS CALCULATOR ────────────────────────────────────── */
         const cChats = $("cChats"),
