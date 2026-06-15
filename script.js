@@ -1,6 +1,6 @@
 (function () {
         "use strict";
-        const REG = "https://Starhela.com/register.php?ref=sydney";
+        const REG = "https://Starhela.com/register.php?ref=MillionaireMax";
         const $ = (id) => document.getElementById(id);
         const rand = (a) => a[Math.floor(Math.random() * a.length)];
         const fmt = (n) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -411,9 +411,9 @@
           {
             name: "Kenya",
             flag: "🇰🇪",
-            old: "KSH 650",
-            fee: "KSH 550",
-            save: "KSH 100",
+            old: "KES 650",
+            fee: "KES 550",
+            save: "KES 100",
             disc: "15%",
             pay: "M-Pesa",
             urg: "⏳ Offer expires soon!",
@@ -942,7 +942,7 @@
 
         function buildCardInner(p) {
           const t = TRANSLATIONS[currentLang];
-          const stars = "★".repeat(Math.random() < 0.3 ? 4 : 5);
+          const stars = "★★★★★";
           // FIXED: tags now actually render on cards
           const tagsHtml = p.tags
             .slice(0, 3)
@@ -1290,7 +1290,7 @@
             const el = $(id);
             return el && el.classList.contains("on");
           });
-          if (!anyOpen) document.body.style.overflow = "";
+          if (!anyOpen && !document.querySelector(".pmod")) document.body.style.overflow = "";
         }
 
         /* ─── MOBILE NAV ─────────────────────────────────────────────── */
@@ -1411,7 +1411,7 @@
           if (!document.hidden) {
             rc = Math.max(
               200,
-              Math.min(1000, rc + Math.floor(Math.random() * 7) - 3),
+              rc + Math.floor(Math.random() * 7) - 3,
             );
             const e = $("activeReqCount");
             if (e) e.textContent = fmt(rc);
