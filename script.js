@@ -1349,16 +1349,17 @@
 
         const isClosedThisSession = sessionStorage.getItem("waMessageClosed");
 
-        if (isClosedThisSession === "true") {
+        if (isClosedThisSession === "true" && messageBox) {
           messageBox.classList.add("hidden");
         }
 
-        closeBtn.addEventListener("click", function (e) {
-          e.stopPropagation();
-          messageBox.classList.add("hidden");
-
-          sessionStorage.setItem("waMessageClosed", "true");
-        });
+        if (closeBtn && messageBox) {
+          closeBtn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            messageBox.classList.add("hidden");
+            sessionStorage.setItem("waMessageClosed", "true");
+          });
+        }
 
         /* ─── EARNINGS CALCULATOR ────────────────────────────────────── */
         const cChats = $("cChats"),
